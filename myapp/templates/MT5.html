@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MT5</title>
+    <style>
+      body {
+        background-color: #f5f5dc;
+        color: rgb(93, 93, 93);
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        margin: 50px auto;
+        text-align: center;
+        max-width: 600px;
+      }
+      .form-container {
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin: 10px 0;
+        text-align: left;
+        background-color: #dce4c9;
+      }
+      .form-group {
+        margin-bottom: 10px;
+      }
+      .form-group label {
+        display: block;
+        font-weight: bold;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 5px;
+      }
+      .toggle-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .toggle {
+        cursor: pointer;
+        background-color: #28a745;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+      }
+      .add-form-btn {
+        cursor: pointer;
+        color: #e07b39;
+        background: none;
+        border-radius: 50%;
+        font-size: 3rem;
+        margin: 20px 0;
+        padding: 5px 15px;
+      }
+      h2 {
+        margin: 20px 0 10px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Master Account Section -->
+      <h2>Master Account</h2>
+      <div class="form-container">
+        <div class="form-group">
+          <label for="master-id">ID:</label>
+          <input type="text" id="master-id" />
+        </div>
+        <div class="form-group">
+          <label for="master-pass">Pass:</label>
+          <input type="text" id="master-pass" />
+        </div>
+        <div class="form-group">
+          <label for="master-server">Server:</label>
+          <input type="text" id="master-server" />
+        </div>
+        <div class="form-group">
+          <label for="master-otp">OTP:</label>
+          <input type="text" id="master-otp" />
+        </div>
+        <div class="toggle-container">
+          <button
+            onclick="toggleStatus('master')"
+            class="toggle"
+            id="toggle-master"
+          >
+            OFF
+          </button>
+          <button onclick="saveForm('master')">Save</button>
+        </div>
+      </div>
+
+      <!-- Child Account Section -->
+      <h2>Child Account</h2>
+      <div id="child-account-container">
+        <!-- "+" Button -->
+        <button class="add-form-btn" onclick="addChildForm()">+</button>
+      </div>
+    </div>
+
+    <script>
+      let childFormCount = 0;
+
+      function toggleStatus(formId) {
+        const toggleButton = document.getElementById(`toggle-${formId}`);
+        if (toggleButton.innerText === "OFF") {
+          toggleButton.innerText = "ON";
+          toggleButton.style.backgroundColor = "#28a745";
+        } else {
+          toggleButton.innerText = "OFF";
+          toggleButton.style.backgroundColor = "#dc3545";
+        }
+      }
+
+      function saveForm(formId) {
+        const inputs = document.querySelectorAll(`#${formId} input`);
+        inputs.forEach((input) => (input.disabled = true));
+        document.querySelector(`#${formId} .save-btn`).remove(); // Remove save button
+      }
+
+      function addChildForm() {
+        childFormCount++;
+        const formContainer = document.createElement("div");
+        formContainer.className = "form-container";
+        formContainer.id = `child-form-${childFormCount}`;
+        formContainer.innerHTML = `
+          <div class="form-group">
+            <label for="login-${childFormCount}">Login:</label>
+            <input type="text" id="login-${childFormCount}" />
+          </div>
+          <div class="form-group">
+            <label for="password-${childFormCount}">Password:</label>
+            <input type="text" id="password-${childFormCount}" />
+          </div>
+          <div class="form-group">
+            <label for="server-${childFormCount}">Server:</label>
+            <input type="text" id="server-${childFormCount}" />
+          </div>
+          <div class="form-group">
+            <label for="otp-${childFormCount}">OTP:</label>
+            <input type="text" id="otp-${childFormCount}" />
+          </div>
+          <div class="toggle-container">
+            <button onclick="toggleStatus('child-form-${childFormCount}')" class="toggle" id="toggle-child-form-${childFormCount}">OFF</button>
+            <button class="save-btn" onclick="saveForm('child-form-${childFormCount}')">Save</button>
+          </div>
+        `;
+        document
+          .getElementById("child-account-container")
+          .appendChild(formContainer);
+      }
+    </script>
+  </body>
+</html>

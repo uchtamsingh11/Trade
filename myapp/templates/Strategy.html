@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Strategy</title>
+    <style>
+      body {
+        background-color: #f5f5dc;
+        color: rgb(93, 93, 93);
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        margin: 50px;
+        text-align: center;
+      }
+      .strategy-form {
+        margin-top: 20px;
+        text-align: left;
+      }
+      .strategy {
+        margin-bottom: 15px;
+      }
+      label,
+      select {
+        margin-right: 10px;
+      }
+      .toggle-btn {
+        display: inline-block;
+        padding: 5px 15px;
+        margin-left: 10px;
+        background-color: red;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      .toggle-btn.active {
+        background-color: green;
+      }
+      button {
+        margin-left: 10px;
+        padding: 5px 10px;
+        background-color: rgb(219, 141, 52);
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: rgb(185, 94, 41);
+      }
+      .label-text {
+        display: inline-block;
+        font-size: 18px;
+        margin-right: 10px;
+        margin-top: 20px;
+        color: rgb(170, 102, 34);
+        font-weight: 700;
+      }
+      .add-str button {
+        color: #000000;
+        font-weight: 900;
+        background-color: rgb(216, 196, 173);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Strategy</h1>
+      <div class="add-str">
+        <span class="label-text"
+          >ADD STRATEGY<button id="addStrategy">+</button></span
+        >
+      </div>
+      <div id="strategyContainer"></div>
+    </div>
+
+    <script>
+      let strategyCount = 0;
+
+      document
+        .getElementById("addStrategy")
+        .addEventListener("click", function () {
+          strategyCount++;
+          const container = document.getElementById("strategyContainer");
+
+          const form = document.createElement("div");
+          form.classList.add("strategy-form");
+          form.innerHTML = `
+          <div class="strategy">
+            <h3>Strategy ${strategyCount}</h3>
+            <label for="strategy${strategyCount}">Select Strategy:</label>
+            <select id="strategy${strategyCount}">
+              <option value="black-flag-ftn">Black Flag Ftn</option>
+              <option value="supertrend">Supertrend</option>
+            </select>
+
+            <button class="toggle-btn" id="toggle${strategyCount}">Off</button>
+          </div>
+        `;
+          container.appendChild(form);
+
+          const toggleButton = document.getElementById(
+            `toggle${strategyCount}`
+          );
+          toggleButton.addEventListener("click", function () {
+            toggleButton.classList.toggle("active");
+            if (toggleButton.classList.contains("active")) {
+              toggleButton.textContent = "On";
+            } else {
+              toggleButton.textContent = "Off";
+            }
+          });
+        });
+    </script>
+  </body>
+</html>
